@@ -5,38 +5,66 @@ import lxml
 import requests
 from bs4 import BeautifulSoup as bs
 
-site = 'https://www.exchangerate-api.com/docs/supported-currencies'
-headers = {
-    'User-Agent':\
-        'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/118.0'
-}
+# site = 'https://www.exchangerate-api.com/docs/supported-currencies'
+# headers = {
+#     'User-Agent':\
+#         'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/118.0'
+# }
 
-def requestor_soup(url):
-    resp = requests.get(url)
-    if resp.status_code == 200:
-        pass
-    else:
-        print(resp.status_code)
-    return bs(resp.content, 'lxml')
+# def requestor_soup(url):
+#     resp = requests.get(url)
+#     if resp.status_code == 200:
+#         pass
+#     else:
+#         print(resp.status_code)
+#     return bs(resp.content, 'lxml')
 
-soup = requestor_soup(site)
+# soup = requestor_soup(site)
 
-tabs = soup.find_all(
-    'table'
-)
-# print(tabs[2])
-names = re.findall(r'\"left\">([a-zA-Z\s]{1,})\</td\>', str(tabs[2]))
+# tabs = soup.find_all(
+#     'table'
+# )
+# # print(tabs[2])
+# names = re.findall(r'\"left\"\>([a-zA-Z\s]{1,})\</td\>', str(tabs[2]))
+# # print(names)
 
-currency_codes = []
-names_countries = []
-[currency_codes.append(x) if all([y.isupper() for y in x]) else names_countries.append(x) for x in  names]
-print(len(currency_codes))
+# currency_codes = []
+# currency_names = []
+# currency_country = []
+# def third(ls:list):
+#     res = []
+#     count = 3
+#     res.append(ls[0])
+#     while len(ls) > 0:
+#         if count > 0:
+#             ls.pop(0)
+#         else:
+#             res.append(ls[0])
+#             ls.pop(0)
+#             count = 3
+#         count -= 1
+#     return res
+# print(third(names))
 
-currency_names = []
-currency_country = []
-[currency_country.append(x) if names_countries.index(x) % 2 == 0 else currency_names.append(x) for x in names_countries]
-print(len(currency_names))
-print(len(currency_codes))
+# currency_codes.append(names[0])
+# currency_names.append(names[1])
+# currency_country.append(names[2])
+
+# print(currency_codes)
+# print(names[::3])
+
+
+# currency_codes = []
+# names_countries = []
+# [currency_codes.append(x) if all([y.isupper() for y in x]) else names_countries.append(x) for x in names]
+# print(len(currency_codes))
+# # print(names_countries)
+
+# currency_names = []
+# currency_country = []
+# [currency_country.append(x) if names_countries.index(x) % 2 == 0 else currency_names.append(x) for x in names_countries]
+# print(len(currency_names))
+# print(len(currency_country))
 
 
 # name_code = []
@@ -46,3 +74,25 @@ print(len(currency_codes))
 # print(name_code)
 
 
+file = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_name_country.txt'
+results = {
+    'currency_codes': [],
+    'currency_codes_names': [],
+    'currency_countries': []
+}
+currency_codes = []
+currency_codes_names = []
+count = 0
+while count < 161:
+    with open(file, 'r', encoding='UTF-8') as tx:
+        t = tx.read().splitlines()
+        results['{} - {}'.format(t[count].split('\t')[0], t[count].split('\t')[1])] = {
+            'currency_code': t[count].split('\t')[0],
+            'currency_country': t[count].split('\t')[2]   
+        }
+        count += 1
+
+print(results)
+
+
+# results = {'country': {'currency_code': 'CODE', 'currency_codes_names': 'CODE - name'}}
