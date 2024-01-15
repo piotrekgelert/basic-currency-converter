@@ -1,9 +1,4 @@
-import itertools as it
-import re
-
-import lxml
-import requests
-from bs4 import BeautifulSoup as bs
+import json
 
 # site = 'https://www.exchangerate-api.com/docs/supported-currencies'
 # headers = {
@@ -75,24 +70,25 @@ from bs4 import BeautifulSoup as bs
 
 
 file = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_name_country.txt'
-results = {
-    'currency_codes': [],
-    'currency_codes_names': [],
-    'currency_countries': []
-}
-currency_codes = []
-currency_codes_names = []
+results = {}
 count = 0
 while count < 161:
     with open(file, 'r', encoding='UTF-8') as tx:
         t = tx.read().splitlines()
-        results['{} - {}'.format(t[count].split('\t')[0], t[count].split('\t')[1])] = {
-            'currency_code': t[count].split('\t')[0],
-            'currency_country': t[count].split('\t')[2]   
+        results[t[count].split('\t')[0]] = {
+            'currency_code_name': '{} - {}'.format(t[count].split('\t')[0], t[count].split('\t')[1]),
+            'currency_country': t[count].split('\t')[2]
         }
+        # results['{} - {}'.format(t[count].split('\t')[0], t[count].split('\t')[1])] = {
+        #     'currency_code': t[count].split('\t')[0],
+        #     'currency_country': t[count].split('\t')[2]   
+        # }
         count += 1
 
-print(results)
+file_path = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_codes_code_name_countries.json'
+with open(file_path, 'w') as f:
+    json.dump(results, f)
+
 
 
 # results = {'country': {'currency_code': 'CODE', 'currency_codes_names': 'CODE - name'}}
