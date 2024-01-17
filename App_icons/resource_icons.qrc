@@ -1,0 +1,5 @@
+<RCC>
+  <qresource prefix="flags">
+    <file>japan_alfa_64x64.png</file>
+  </qresource>
+</RCC>

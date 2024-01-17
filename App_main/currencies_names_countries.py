@@ -77,7 +77,8 @@ while count < 161:
         t = tx.read().splitlines()
         results[t[count].split('\t')[0]] = {
             'currency_code_name': '{} - {}'.format(t[count].split('\t')[0], t[count].split('\t')[1]),
-            'currency_country': t[count].split('\t')[2]
+            'currency_country': ''.join(['_' if z == ' ' else z for z in t[count].split('\t')[2].lower()])
+            # 'currency_country': t[count].split('\t')[2]
         }
         # results['{} - {}'.format(t[count].split('\t')[0], t[count].split('\t')[1])] = {
         #     'currency_code': t[count].split('\t')[0],
@@ -85,10 +86,19 @@ while count < 161:
         # }
         count += 1
 
-file_path = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_codes_code_name_countries.json'
+# print(results)
+file_path = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_codes_code_name_countries2.json'
 with open(file_path, 'w') as f:
     json.dump(results, f)
 
-
-
 # results = {'country': {'currency_code': 'CODE', 'currency_codes_names': 'CODE - name'}}
+
+# file_json = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_codes_code_name_countries.json'
+# with open(file_json, 'r') as fn:
+#     f = fn.read()
+#     d = json.loads(f)
+#     for x in d.values():
+#         country = ''.join(['_' if z == ' ' else z for z in x['currency_country'].lower()])
+#         print(country)
+        # print(x['currency_country'])
+    # print(d.values()['currency_country'])

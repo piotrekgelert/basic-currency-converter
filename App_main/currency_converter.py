@@ -25,7 +25,7 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
         self.setupUi(self)
         self.set_date()
         self.set_currencies()
-        self.pb_clear.clicked.connect(self.get_from_currency)
+        self.pb_clear_all.clicked.connect(self.get_from_currency)
         self.pb_swap.clicked.connect(self.get_to_currency)
     
     def get_data(self, currency: str):
@@ -40,22 +40,24 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
     
     def set_currencies(self):
         currency_names = self.get_json_data()
-        self.cbb_from.addItems(currency_names.keys())
-        self.cbb_to.addItems(currency_names.keys())
+        names = []
+        for x in currency_names.values():
+            names.append(x['currency_code_name'])
+        self.cbb_from.addItems(names)
+        self.cbb_to.addItems(names)
     
     def get_from_currency(self):
-        print(self.cbb_from.currentText())
-        currency_name = self.get_json_data()
-        self.lb_short_from.setWindowIcon(qtg.QIcon())
-        self.lb_short_from.setText(currency_name[self.cbb_from.currentText()]['currency_country'])
-        # if 
-        # self.lb_short_from.
+        current_money = self.cbb_from.currentText()
+        current_country = self.get_json_data()
+        for x in current_country.values():
+            if current_money == x['currency_code_name']:
+                print(x['currency_country'])
     
     def get_to_currency(self):
         print(self.cbb_to.currentText())
     
     def get_json_data(self):
-        file = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_countries_codes_names.json'
+        file = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_codes_code_name_countries.json'
         with open(file, 'r') as f:
             curr = json.load(f)
             return curr
