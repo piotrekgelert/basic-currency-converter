@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_fm_main(object):
     def setupUi(self, fm_main):
         fm_main.setObjectName("fm_main")
-        fm_main.resize(495, 499)
+        fm_main.resize(465, 500)
         font = QtGui.QFont()
         font.setFamily("Comic Sans MS")
         font.setPointSize(12)
