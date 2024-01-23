@@ -1,5 +1,6 @@
 import json
 import os
+import pathlib
 import sys
 
 import PyQt6.QtGui as qtg
@@ -27,7 +28,6 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
         self.setupUi(self)
         self.set_date()
         self.set_currencies()
-        self.cbb_from
         self.cbb_from.activated.connect(self.get_from)
         self.cbb_to.activated.connect(self.get_to)
 
@@ -59,10 +59,14 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
         self.get_currency(self.cbb_to.currentText())
     
     def get_currency(self, current_money):
+        root_folder = r''.format(pathlib.Path(__file__).parent.absolute().parent)
+        main_path = os.path.join(root_folder, 'App_icons')
         current_country = self.get_json_data()
         for x in current_country.values():
             if current_money == x['currency_code_name']:
                 self.lb_message.setText(x['currency_country'])
+                print(x['currency_country'])
+                self.lb_short_from.setPixmap(qtg.QPixmap('{}\\{}'.format(main_path, f"{x['currency_country']}.png")))
     
     def get_json_data(self):
         file = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_codes_code_name_countries.json'

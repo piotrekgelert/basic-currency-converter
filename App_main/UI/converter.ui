@@ -173,7 +173,7 @@
     </rect>
    </property>
    <property name="pixmap">
-    <pixmap resource="../../App_icons/resource_icons.qrc">:/flags/japan_alfa_64x64.png</pixmap>
+    <pixmap resource="../../App_icons/resource_icons.qrc">:/flags/empty.png</pixmap>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -189,7 +189,7 @@
     </rect>
    </property>
    <property name="pixmap">
-    <pixmap resource="../../App_icons/resource_icons.qrc">:/flags/japan_alfa_64x64.png</pixmap>
+    <pixmap resource="../../App_icons/resource_icons.qrc">:/flags/empty.png</pixmap>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
