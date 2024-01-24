@@ -21,7 +21,7 @@ headers = {
 # print(data['rates'].keys())
     
 class ConvertMoney(qtw.QWidget, Ui_fm_main):
-    country_from, country_to = '', ''
+    short_from, short_to = '', ''
     
     def __init__(self):
         super().__init__()
@@ -53,26 +53,38 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
         self.cbb_to.addItems(names)
     
     def get_from(self):
-        self.get_currency(self.cbb_from.currentText())
+        self.get_currency(self.cbb_from.currentText(), 0)
     
     def get_to(self):
-        self.get_currency(self.cbb_to.currentText())
+        self.get_currency(self.cbb_to.currentText(), 1)
     
-    def get_currency(self, current_money):
+    def get_currency(self, current_money, from_to):
         root_folder = r''.format(pathlib.Path(__file__).parent.absolute().parent)
         main_path = os.path.join(root_folder, 'App_icons')
         current_country = self.get_json_data()
-        for x in current_country.values():
+        for k, x in current_country.items():
             if current_money == x['currency_code_name']:
-                self.lb_message.setText(x['currency_country'])
-                print(x['currency_country'])
-                self.lb_short_from.setPixmap(qtg.QPixmap('{}\\{}'.format(main_path, f"{x['currency_country']}.png")))
+                if from_to == 0:
+                    self.lb_short_from.setPixmap(
+                        qtg.QPixmap('{}\\{}'.format(
+                            main_path, f"{x['currency_country']}.png"
+                            ))
+                        )
+                    self.short_from = k
+                if from_to == 1:
+                    self.lb_short_to.setPixmap(
+                        qtg.QPixmap('{}\\{}'.format(
+                            main_path, f"{x['currency_country']}.png"
+                            ))
+                        )
+                    self.short_to = k
     
     def get_json_data(self):
         file = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_codes_code_name_countries.json'
         with open(file, 'r') as f:
             curr = json.load(f)
             return curr
+    
 
 
 
