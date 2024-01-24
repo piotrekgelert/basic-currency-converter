@@ -22,6 +22,7 @@ headers = {
     
 class ConvertMoney(qtw.QWidget, Ui_fm_main):
     short_from, short_to = '', ''
+    swap = 0
     
     def __init__(self):
         super().__init__()
@@ -30,9 +31,11 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
         self.set_currencies()
         self.cbb_from.activated.connect(self.get_from)
         self.cbb_to.activated.connect(self.get_to)
-
+        
+        self.pb_swap.clicked.connect(self.set_swap)
+        self.pb_calculate.clicked.connect(self.count_currencies)
+        
         # self.pb_clear_all.clicked.connect(self.get_currency(self.get_from))
-        # self.pb_swap.clicked.connect(self.get_currency(self.get_to))
     
     def get_data(self, currency: str):
         api_key = f'https://open.er-api.com/v6/latest/{currency}'
@@ -54,6 +57,7 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
     
     def get_from(self):
         self.get_currency(self.cbb_from.currentText(), 0)
+
     
     def get_to(self):
         self.get_currency(self.cbb_to.currentText(), 1)
@@ -78,13 +82,34 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
                             ))
                         )
                     self.short_to = k
-    
+
     def get_json_data(self):
         file = r'D:\Python_PORTFOLIO\12_basic_currency_converter\App_main\currency_codes_code_name_countries.json'
         with open(file, 'r') as f:
             curr = json.load(f)
             return curr
     
+    def count_currencies(self):
+        datas = self.get_data(self.short_from)
+        amount = float(self.le_value_to_convert.text())
+        result = round(amount * float(datas['rates'][self.short_to]), 2)
+        self.lcd_val_to.display(str(result))
+        print(result)
+    
+    def set_swap(self):
+        old_from = self.cbb_from.currentText()
+        old_to = self.cbb_to.currentText()
+        new_from = self.cbb_from.setCurrentText(old_to)
+        new_to = self.cbb_to.setCurrentText(old_from)
+        if self.swap == 0:
+            self.swap = 1
+            self.get_currency(new_from, 1)
+            self.get_currency(new_to, 0)
+        elif self.swap == 1:
+            self.swap = 0
+            self.get_currency(new_to, 0)
+            self.get_currency(new_from, 1)
+        print('swapped')
 
 
 
