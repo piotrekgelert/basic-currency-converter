@@ -14,11 +14,6 @@ headers = {
     'User-Agent':\
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/118.0'
 }
-# resp = requests.get(api_key)
-# if resp.status_code == 200:
-#     data = resp.json()
-
-# print(data['rates'].keys())
     
 class ConvertMoney(qtw.QWidget, Ui_fm_main):
     short_from, short_to = '', ''
@@ -35,7 +30,8 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
         self.pb_swap.clicked.connect(self.set_swap)
         self.pb_calculate.clicked.connect(self.count_currencies)
         
-        # self.pb_clear_all.clicked.connect(self.get_currency(self.get_from))
+        self.pb_cancel.clicked.connect(self.close)
+        self.pb_reset.clicked.connect(self.reset_all)
     
     def get_data(self, currency: str):
         api_key = f'https://open.er-api.com/v6/latest/{currency}'
@@ -94,6 +90,7 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
         amount = float(self.le_value_to_convert.text())
         result = round(amount * float(datas['rates'][self.short_to]), 2)
         self.lcd_val_to.display(str(result))
+        
         print(result)
     
     def set_swap(self):
@@ -101,15 +98,25 @@ class ConvertMoney(qtw.QWidget, Ui_fm_main):
         old_to = self.cbb_to.currentText()
         new_from = self.cbb_from.setCurrentText(old_to)
         new_to = self.cbb_to.setCurrentText(old_from)
+        
         if self.swap == 0:
             self.swap = 1
             self.get_currency(new_from, 1)
             self.get_currency(new_to, 0)
-        elif self.swap == 1:
+        if self.swap == 1:
             self.swap = 0
-            self.get_currency(new_to, 0)
-            self.get_currency(new_from, 1)
-        print('swapped')
+            self.get_currency(old_to, 0)
+            self.get_currency(old_from, 1)
+        self.lb_message.setText('Currencies were swapped')
+    
+    def reset_all(self):
+        self.le_value_to_convert.clear()
+        self.cbb_from.setCurrentIndex(0)
+        self.cbb_to.setCurrentIndex(0)
+        self.lcd_val_to.display('0')
+        self.lb_short_from.clear()
+        self.lb_short_to.clear()
+        self.lb_message.setText('All data are cleared')
 
 
 

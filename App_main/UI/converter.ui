@@ -106,23 +106,23 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pb_clear_all">
+  <widget class="QPushButton" name="pb_cancel">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>350</x>
      <y>390</y>
      <width>91</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>Clear All</string>
+    <string>Cancel</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pb_swap">
    <property name="geometry">
     <rect>
-     <x>250</x>
+     <x>130</x>
      <y>390</y>
      <width>91</width>
      <height>31</height>
@@ -135,7 +135,7 @@
   <widget class="QPushButton" name="pb_calculate">
    <property name="geometry">
     <rect>
-     <x>360</x>
+     <x>240</x>
      <y>390</y>
      <width>91</width>
      <height>31</height>
@@ -153,9 +153,6 @@
      <width>441</width>
      <height>31</height>
     </rect>
-   </property>
-   <property name="text">
-    <string>Message</string>
    </property>
   </widget>
   <widget class="QLabel" name="lb_date">
@@ -206,7 +203,7 @@
   <widget class="QPushButton" name="pb_reset">
    <property name="geometry">
     <rect>
-     <x>140</x>
+     <x>20</x>
      <y>390</y>
      <width>91</width>
      <height>31</height>
