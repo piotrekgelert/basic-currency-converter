@@ -5,15 +5,14 @@ from Exchange Rate API website
 
 ## ui examples
 <p align="middle">
-  <img src="" width="30%"/>
+  <img src="https://github.com/piotrekgelert/basic-currency-converter/blob/main/images/converted.png" width="30%"/>
 
 </p>
 
 ### notes
 - [x] Two currency selector
 - [x] 'Swap' button -> 'Calculate' button to exchange currency
-- [x] 
-- [x] 
+- [x] The date and time of last data refresh 
 - [x] The data refreshes once every 24 hours
 - [x] The api supports 161 currencies
 
